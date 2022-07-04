@@ -32,10 +32,18 @@ const seleccionarPelicula = e => {
             <h4>Elija su pelicula: ${pelicula.nombre} </h4>
             <h4>${pelicula.horarios.map((h) =>{ return `<br>${h.dia} ${ h.horarios.map(( hr) => ` <br> ${hr.hora} `  )}`  })}
             </h4>
+            <br>
             `
         modalContainer.querySelector("#my-modal").innerHTML = _div
 
         modalContainer.classList.add("my-modal-container--visible")
+
+        localStorage.setItem("peliculas",JSON.stringify(pelicula))
+
+        const listaPelicula = JSON.parse(localStorage.getItem("peliculas"))
+
+        console.log(listaPelicula)
+
     }
 }
 
@@ -45,3 +53,10 @@ closeModal.addEventListener( "click", () => {
 
 peliculas.addEventListener('click', seleccionarPelicula);
 window.addEventListener('DOMContentLoaded', mostrarPeliculas);
+
+
+
+
+
+
+
