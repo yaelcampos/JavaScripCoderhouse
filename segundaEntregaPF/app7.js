@@ -1,21 +1,31 @@
-const peliculasContainer = document.querySelector("#card-peliculas")
+const peliculasContainer = document.querySelector("#card-peliculas") 
 
 const mostrarPeliculas = () => {
-    funcion_cine.forEach(pelicula => {
+
+    fetch("https://api.themoviedb.org/3/movie/popular?api_key=047212871d49b6418656e8bb299c3da6")
+    .then( (resp) =>  resp.json())
+    .then((data) => {
+
+    data.results.forEach((pelicula) => {
+
         const cardPelicula = document.createElement("section")
         cardPelicula.classList.add("#peliculas")
 
         peliculas.innerHTML += `
-        <div class="card card-style my-4" style="width: 18rem;">
-        <img src="${pelicula.imagen}" class="card-img-top img-cartelera" alt="...">
-        <div class="card-body">
-        <h5 class="card-title">${pelicula.nombre}</h5>
-        <p class="card-text">${pelicula.descripcion}</p>
-        <button id="${pelicula.id}" class="btn btn-primary btn-entradas">Comprar entradas</button>
-        </div>
-        </div>
+                <div class="card card-style my-4" style="width: 18rem;">
+                <img class="card-img-top img-cartelera" alt="..." src="https://image.tmdb.org/t/p/w500/${pelicula.poster_path}"> 
+                <div class="card-body">
+                <h5 class="card-title">${pelicula.title}</h5>
+                <p class="card-text">${pelicula.overview}</p>
+                <button id="${pelicula.id}" class="btn-entradas">Comprar entradas</button>
+                </div>
+                </div>
         `
-    });
+        }
+    )}  
+    ).catch((error) => {
+        console.log(error)
+    })  
 }
 
 
@@ -52,11 +62,4 @@ closeModal.addEventListener( "click", () => {
 })
 
 peliculas.addEventListener('click', seleccionarPelicula);
-window.addEventListener('DOMContentLoaded', mostrarPeliculas);
-
-
-
-
-
-
-
+window.addEventListener('DOMContentLoaded', mostrarPeliculas)
